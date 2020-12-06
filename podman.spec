@@ -12,6 +12,7 @@ BuildRequires:	go-md2man
 BuildRequires:	golang
 BuildRequires:	golang-varlink
 Requires:	conmon
+Requires:	containernetworking-plugins
 Requires:	crun
 ExclusiveArch:	%{ix86} %{x8664} %{arm} aarch64 mips64 mips64le ppc64 ppc64le s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -63,6 +64,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md changelog.txt
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cni/net.d/87-podman-bridge.conflist
 %attr(755,root,root) %{_bindir}/podman
 %attr(755,root,root) %{_bindir}/podman-remote
 %{systemdunitdir}/podman.service
