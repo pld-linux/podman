@@ -7,6 +7,7 @@ Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	30e6ad5fe7c4abfef3e07e2fa8e904dd
+Source1:	policy.json
 URL:		https://github.com/containers/podman
 BuildRequires:	go-md2man
 BuildRequires:	golang
@@ -45,6 +46,8 @@ images, and volumes.
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/containers
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	PREFIX=%{_prefix} \
@@ -58,6 +61,8 @@ rm -rf $RPM_BUILD_ROOT
 	USERSYSTEMDDIR=%{systemduserunitdir} \
 	PYTHON=%{__python3}
 
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/containers
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -65,6 +70,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md changelog.txt
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cni/net.d/87-podman-bridge.conflist
+%dir %{_sysconfdir}/containers
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/policy.json
 %attr(755,root,root) %{_bindir}/podman
 %attr(755,root,root) %{_bindir}/podman-remote
 %{systemdunitdir}/podman.service
