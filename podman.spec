@@ -1,12 +1,12 @@
 Summary:	A tool for managing OCI containers and pods
 Name:		podman
-Version:	2.1.0
+Version:	3.0.0
 Release:	1
 License:	Apache v2.0
 Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	30e6ad5fe7c4abfef3e07e2fa8e904dd
+# Source0-md5:	3e48e590ca45863dcc2cf6ea509e4f8c
 Source1:	policy.json
 URL:		https://github.com/containers/podman
 BuildRequires:	go-md2man
@@ -32,16 +32,16 @@ images, and volumes.
 %build
 %{__make} \
 	GO=/usr/bin/go \
-	PREFIX=%{_prefix} \
-	BINDIR=%{_bindir} \
-	LIBEXECDIR=%{_libexecdir} \
-	MANDIR=%{_mandir} \
-	SHAREDIR_CONTAINERS=%{_datadir}/containers \
-	ETCDIR=%{_sysconfdir} \
-	TMPFILESDIR=%{systemdtmpfilesdir} \
-	SYSTEMDDIR=%{systemdunitdir} \
-	USERSYSTEMDDIR=%{systemduserunitdir} \
-	PYTHON=%{__python3}
+	PREFIX="%{_prefix}" \
+	BINDIR="%{_bindir}" \
+	LIBEXECDIR="%{_libexecdir}" \
+	MANDIR="%{_mandir}" \
+	SHAREDIR_CONTAINERS="%{_datadir}/containers" \
+	ETCDIR="%{_sysconfdir}" \
+	TMPFILESDIR="%{systemdtmpfilesdir}" \
+	SYSTEMDDIR="%{systemdunitdir}" \
+	USERSYSTEMDDIR="%{systemduserunitdir}" \
+	PYTHON="%{__python3}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -50,16 +50,16 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/containers
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	PREFIX=%{_prefix} \
-	BINDIR=%{_bindir} \
-	LIBEXECDIR=%{_libexecdir} \
-	MANDIR=%{_mandir} \
-	SHAREDIR_CONTAINERS=%{_datadir}/containers \
-	ETCDIR=%{_sysconfdir} \
-	TMPFILESDIR=%{systemdtmpfilesdir} \
-	SYSTEMDDIR=%{systemdunitdir} \
-	USERSYSTEMDDIR=%{systemduserunitdir} \
-	PYTHON=%{__python3}
+	PREFIX="%{_prefix}" \
+	BINDIR="%{_bindir}" \
+	LIBEXECDIR="%{_libexecdir}" \
+	MANDIR="%{_mandir}" \
+	SHAREDIR_CONTAINERS="%{_datadir}/containers" \
+	ETCDIR="%{_sysconfdir}" \
+	TMPFILESDIR="%{systemdtmpfilesdir}" \
+	SYSTEMDDIR="%{systemdunitdir}" \
+	USERSYSTEMDDIR="%{systemduserunitdir}" \
+	PYTHON="%{__python3}"
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/containers
 
@@ -85,3 +85,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/podman*.1*
 %{_mandir}/man5/containers-mounts.conf.5*
 %{_mandir}/man5/oci-hooks.5*
+/usr/lib/tmpfiles.d/podman.conf
