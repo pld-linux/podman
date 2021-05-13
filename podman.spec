@@ -8,6 +8,7 @@ Group:		Applications/System
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	763d21ca1d9d3a3b7a49b226843e609e
 Source1:	policy.json
+Source2:	registries.conf
 URL:		https://github.com/containers/podman
 BuildRequires:	go-md2man
 BuildRequires:	golang
@@ -64,7 +65,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/containers
 	USERSYSTEMDDIR="%{systemduserunitdir}" \
 	PYTHON="%{__python3}"
 
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/containers
+cp -p %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/containers
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -75,6 +76,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cni/net.d/87-podman-bridge.conflist
 %dir %{_sysconfdir}/containers
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/policy.json
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/registries.conf
 %attr(755,root,root) %{_bindir}/podman
 %attr(755,root,root) %{_bindir}/podman-remote
 %{systemdunitdir}/podman.service
