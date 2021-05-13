@@ -34,6 +34,7 @@ images, and volumes.
 %build
 %{__make} \
 	GO=/usr/bin/go \
+	GOPATH=$(pwd)/.gopath \
 	PREFIX="%{_prefix}" \
 	BINDIR="%{_bindir}" \
 	LIBEXECDIR="%{_libexecdir}" \
