@@ -15,6 +15,8 @@ BuildRequires:	golang-varlink
 Requires:	conmon
 Requires:	containernetworking-plugins
 Requires:	crun
+Suggests:	slirp4netns
+Suggests:	uidmap
 ExclusiveArch:	%{ix86} %{x8664} %{arm} aarch64 mips64 mips64le ppc64 ppc64le s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
