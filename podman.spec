@@ -13,6 +13,7 @@ URL:		https://github.com/containers/podman
 BuildRequires:	go-md2man
 BuildRequires:	golang
 BuildRequires:	golang-varlink
+BuildRequires:	rpm-build >= 4.6
 Requires:	conmon
 Requires:	containernetworking-plugins
 Requires:	crun
@@ -28,6 +29,36 @@ containers. Podman is based on libpod, a library for container
 lifecycle management that is also contained in this repository. The
 libpod library provides APIs for managing containers, pods, container
 images, and volumes.
+
+%package -n bash-completion-podman
+Summary:	bash-completion for podman
+Group:		Applications/Shells
+Requires:	%{name} = %{version}-%{release}
+Requires:	bash-completion >= 2.0
+BuildArch:	noarch
+
+%description -n bash-completion-podman
+This package provides bash-completion for podman.
+
+%package -n fish-completion-podman
+Summary:	Fish completion for podman command
+Group:		Applications/Shells
+Requires:	%{name} = %{version}-%{release}
+Requires:	fish
+BuildArch:	noarch
+
+%description -n fish-completion-podman
+Fish completion for podman command.
+
+%package -n zsh-completion-podman
+Summary:	Zsh completion for podman command
+Group:		Applications/Shells
+Requires:	%{name} = %{version}-%{release}
+Requires:	zsh
+BuildArch:	noarch
+
+%description -n zsh-completion-podman
+Zsh completion for podman command.
 
 %prep
 %setup -q
@@ -50,7 +81,7 @@ images, and volumes.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/containers
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers,%{bash_compdir},%{fish_compdir},%{zsh_compdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -66,6 +97,10 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/containers
 	PYTHON="%{__python3}"
 
 cp -p %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/containers
+
+$RPM_BUILD_ROOT%{_bindir}/podman completion -f $RPM_BUILD_ROOT%{bash_compdir}/podman bash
+$RPM_BUILD_ROOT%{_bindir}/podman completion -f $RPM_BUILD_ROOT%{fish_compdir}/podman.fish fish
+$RPM_BUILD_ROOT%{_bindir}/podman completion -f $RPM_BUILD_ROOT%{zsh_compdir}/_podman zsh
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -91,3 +126,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/containers-mounts.conf.5*
 %{_mandir}/man5/oci-hooks.5*
 /usr/lib/tmpfiles.d/podman.conf
+
+%files -n bash-completion-podman
+%defattr(644,root,root,755)
+%{bash_compdir}/podman
+
+%files -n fish-completion-%{name}
+%defattr(644,root,root,755)
+%{fish_compdir}/podman.fish
+
+%files -n zsh-completion-%{name}
+%defattr(644,root,root,755)
+%{zsh_compdir}/_podman
