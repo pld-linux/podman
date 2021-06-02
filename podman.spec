@@ -9,6 +9,7 @@ Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{vers
 # Source0-md5:	763d21ca1d9d3a3b7a49b226843e609e
 Source1:	policy.json
 Source2:	registries.conf
+Patch0:		%{name}-seccomp_32bit.patch
 URL:		https://github.com/containers/podman
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
@@ -67,6 +68,8 @@ Zsh completion for podman command.
 
 %prep
 %setup -q
+cd vendor/github.com/containers/common
+%patch0 -p1
 
 %build
 %{__make} \
