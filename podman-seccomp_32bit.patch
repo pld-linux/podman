@@ -125,3 +125,40 @@ index 8d799fd..cf81ca4 100644
 -- 
 2.31.1
 
+From 42d1db16bfc0dbaee5781d230dc2bcbaa0849c6e Mon Sep 17 00:00:00 2001
+From: Jan Palus <jpalus@fastmail.com>
+Date: Mon, 14 Jun 2021 12:53:14 +0200
+Subject: [PATCH] seccomp: allow timer_settime64
+
+allow time64 variant of timer_settime which was missed in 4e31f66
+
+Signed-off-by: Jan Palus <jpalus@fastmail.com>
+---
+ pkg/seccomp/default_linux.go | 1 +
+ pkg/seccomp/seccomp.json     | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/pkg/seccomp/default_linux.go b/pkg/seccomp/default_linux.go
+index 6bbb80b5..423c983f 100644
+--- a/pkg/seccomp/default_linux.go
++++ b/pkg/seccomp/default_linux.go
+@@ -368,6 +368,7 @@ func DefaultProfile() *Seccomp {
+ 				"timer_gettime",
+ 				"timer_gettime64",
+ 				"timer_settime",
++				"timer_settime64",
+ 				"timerfd_create",
+ 				"timerfd_gettime",
+ 				"timerfd_gettime64",
+diff --git a/pkg/seccomp/seccomp.json b/pkg/seccomp/seccomp.json
+index cf81ca41..a87f7352 100644
+--- a/pkg/seccomp/seccomp.json
++++ b/pkg/seccomp/seccomp.json
+@@ -372,6 +372,7 @@
+ 				"timer_gettime",
+ 				"timer_gettime64",
+ 				"timer_settime",
++				"timer_settime64",
+ 				"timerfd_create",
+ 				"timerfd_gettime",
+ 				"timerfd_gettime64",
