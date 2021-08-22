@@ -1,15 +1,14 @@
 Summary:	A tool for managing OCI containers and pods
 Name:		podman
-Version:	3.2.3
+Version:	3.3.0
 Release:	1
 License:	Apache v2.0
 Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	18148c3fce515cd43a4bb91eb85e79de
+# Source0-md5:	eb3daf249395191df0f6424300046026
 Source1:	policy.json
 Source2:	registries.conf
-Patch0:		%{name}-seccomp_32bit.patch
 URL:		https://github.com/containers/podman
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
@@ -68,8 +67,6 @@ Zsh completion for podman command.
 
 %prep
 %setup -q
-cd vendor/github.com/containers/common
-%patch0 -p1
 
 %build
 %{__make} \
@@ -116,7 +113,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.md changelog.txt
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/cni/net.d/87-podman-bridge.conflist
 %dir %{_sysconfdir}/containers
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/policy.json
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/registries.conf
@@ -126,12 +122,13 @@ rm -rf $RPM_BUILD_ROOT
 %{systemdunitdir}/podman.socket
 %{systemdunitdir}/podman-auto-update.service
 %{systemdunitdir}/podman-auto-update.timer
+%{systemdunitdir}/podman-restart.service
 %{systemduserunitdir}/podman.service
 %{systemduserunitdir}/podman.socket
 %{systemduserunitdir}/podman-auto-update.service
 %{systemduserunitdir}/podman-auto-update.timer
+%{systemduserunitdir}/podman-restart.service
 %{_mandir}/man1/podman*.1*
-%{_mandir}/man5/containers-mounts.conf.5*
 %{_mandir}/man5/oci-hooks.5*
 /usr/lib/tmpfiles.d/podman.conf
 
