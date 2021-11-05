@@ -18,6 +18,7 @@ BuildRequires:	gpgme-devel
 BuildRequires:	libseccomp-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
+BuildRequires:	rpmbuild(macros) >= 1.644
 BuildRequires:	systemd-devel
 Requires:	conmon
 Requires:	containernetworking-plugins
