@@ -116,6 +116,15 @@ $RPM_BUILD_ROOT%{_bindir}/podman completion -f $RPM_BUILD_ROOT%{zsh_compdir}/_po
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+%systemd_post podman.service podman.socket
+
+%preun
+%systemd_preun podman.service podman.socket
+
+%postun
+%systemd_reload
+
 %files
 %defattr(644,root,root,755)
 %doc README.md
