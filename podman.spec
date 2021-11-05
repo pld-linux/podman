@@ -86,7 +86,7 @@ Zsh completion for podman command.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers,%{bash_compdir},%{fish_compdir},%{zsh_compdir}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers,%{bash_compdir},%{fish_compdir},%{zsh_compdir},%{_sharedstatedir}/containers}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -101,7 +101,13 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers,%{bash_compdir},%{fish_comp
 	USERSYSTEMDDIR="%{systemduserunitdir}" \
 	PYTHON="%{__python3}"
 
-cp -p %{SOURCE1} %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/containers
+cp -p %{SOURCE1} %{SOURCE2} \
+	vendor/github.com/containers/common/pkg/config/containers.conf \
+	$RPM_BUILD_ROOT%{_sysconfdir}/containers
+
+%{__sed} -e 's|/var/lib/containers|%{_sharedstatedir}/containers|g' \
+	vendor/github.com/containers/storage/storage.conf \
+        > $RPM_BUILD_ROOT%{_sysconfdir}/containers/storage.conf
 
 $RPM_BUILD_ROOT%{_bindir}/podman completion -f $RPM_BUILD_ROOT%{bash_compdir}/podman bash
 $RPM_BUILD_ROOT%{_bindir}/podman completion -f $RPM_BUILD_ROOT%{fish_compdir}/podman.fish fish
@@ -114,8 +120,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.md
 %dir %{_sysconfdir}/containers
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/containers.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/policy.json
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/registries.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/storage.conf
 %attr(755,root,root) %{_bindir}/podman
 %attr(755,root,root) %{_bindir}/podman-remote
 %{systemdunitdir}/podman.service
@@ -131,6 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/podman*.1*
 %{_mandir}/man5/oci-hooks.5*
 /usr/lib/tmpfiles.d/podman.conf
+%dir %{_sharedstatedir}/containers
 
 %files -n bash-completion-podman
 %defattr(644,root,root,755)
