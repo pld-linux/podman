@@ -18,7 +18,7 @@ BuildRequires:	gpgme-devel
 BuildRequires:	libseccomp-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.644
+BuildRequires:	rpmbuild(macros) >= 2.009
 BuildRequires:	systemd-devel
 Requires:	conmon
 Requires:	containernetworking-plugins
@@ -74,6 +74,7 @@ Zsh completion for podman command.
 %build
 %{__make} \
 	GO=/usr/bin/go \
+	GOCMD="CGO_ENABLED=1 %__go" \
 	GOPATH=$(pwd)/.gopath \
 	PREFIX="%{_prefix}" \
 	BINDIR="%{_bindir}" \
