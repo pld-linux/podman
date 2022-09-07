@@ -1,12 +1,12 @@
 Summary:	A tool for managing OCI containers and pods
 Name:		podman
-Version:	4.2.0
+Version:	4.2.1
 Release:	1
 License:	Apache v2.0
 Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	d4261e2b46342aaf0df285410064955c
+# Source0-md5:	53116cd4e1d02caabcd7b14445603c27
 Source1:	policy.json
 Source2:	registries.conf
 URL:		https://github.com/containers/podman
