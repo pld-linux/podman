@@ -22,8 +22,8 @@ BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 2.009
 BuildRequires:	systemd-devel
 Requires:	conmon
-Requires:	containernetworking-plugins
 Requires:	crun
+Requires:	netavark
 Suggests:	slirp4netns
 Suggests:	uidmap
 ExclusiveArch:	%go_arches
