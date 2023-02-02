@@ -12,7 +12,7 @@ Source2:	registries.conf
 URL:		https://github.com/containers/podman
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
-BuildRequires:	golang
+BuildRequires:	golang >= 1.17
 BuildRequires:	golang-varlink
 BuildRequires:	gpgme-devel
 BuildRequires:	libseccomp-devel
