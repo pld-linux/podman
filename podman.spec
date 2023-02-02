@@ -73,7 +73,7 @@ Zsh completion for podman command.
 %setup -q
 
 %build
-%{__make} \
+%{__make} -j1 \
 	GO=/usr/bin/go \
 	GOCMD="CGO_ENABLED=1 %__go" \
 	GOPATH=$(pwd)/.gopath \
