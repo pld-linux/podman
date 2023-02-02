@@ -1,18 +1,18 @@
 Summary:	A tool for managing OCI containers and pods
 Name:		podman
-Version:	4.3.1
+Version:	4.4.0
 Release:	1
 License:	Apache v2.0
 Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2e3d5e989adf3d00ba9abbfccaa0bbf8
+# Source0-md5:	c2561a9774211385cc79e8eb695f7e15
 Source1:	policy.json
 Source2:	registries.conf
 URL:		https://github.com/containers/podman
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
-BuildRequires:	golang >= 1.17
+BuildRequires:	golang >= 1.18
 BuildRequires:	golang-varlink
 BuildRequires:	gpgme-devel
 BuildRequires:	libseccomp-devel
@@ -103,6 +103,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers,%{bash_compdir},%{fish_comp
 	ETCDIR="%{_sysconfdir}" \
 	TMPFILESDIR="%{systemdtmpfilesdir}" \
 	SYSTEMDDIR="%{systemdunitdir}" \
+	SYSTEMDGENERATORSDIR="%{_systemdgeneratordir}" \
+	USERSYSTEMDGENERATORSDIR="%{_systemdusergeneratordir}" \
 	USERSYSTEMDDIR="%{systemduserunitdir}" \
 	PYTHON="%{__python3}"
 
@@ -141,19 +143,23 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/podman
 %attr(755,root,root) %{_bindir}/podman-remote
 %dir %{_libexecdir}/podman
+%attr(755,root,root) %{_libexecdir}/podman/quadlet
 %attr(755,root,root) %{_libexecdir}/podman/rootlessport
 %{systemdunitdir}/podman.service
 %{systemdunitdir}/podman.socket
 %{systemdunitdir}/podman-auto-update.service
 %{systemdunitdir}/podman-auto-update.timer
+%{systemdunitdir}/podman-clean-transient.service
 %{systemdunitdir}/podman-kube@.service
 %{systemdunitdir}/podman-restart.service
+%{_systemdgeneratordir}/podman-system-generator
 %{systemduserunitdir}/podman.service
 %{systemduserunitdir}/podman.socket
 %{systemduserunitdir}/podman-auto-update.service
 %{systemduserunitdir}/podman-auto-update.timer
 %{systemduserunitdir}/podman-kube@.service
 %{systemduserunitdir}/podman-restart.service
+%{_systemdusergeneratordir}/podman-user-generator
 %{_mandir}/man1/podman*.1*
 /usr/lib/tmpfiles.d/podman.conf
 %dir %{_sharedstatedir}/containers
