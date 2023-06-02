@@ -10,6 +10,7 @@ Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{vers
 Source1:	policy.json
 Source2:	registries.conf
 URL:		https://github.com/containers/podman
+BuildRequires:	btrfs-progs-devel
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
 BuildRequires:	golang >= 1.18
