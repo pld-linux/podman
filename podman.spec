@@ -1,19 +1,19 @@
 Summary:	A tool for managing OCI containers and pods
 Name:		podman
-Version:	5.2.5
+Version:	5.3.0
 Release:	1
 License:	Apache v2.0
 Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c9975697bdcbfabb331a4dc25635deec
+# Source0-md5:	91d3d0c60bd5ec6ffaa16b9fa78c1aac
 Source1:	policy.json
 Source2:	registries.conf
 URL:		https://github.com/containers/podman
 BuildRequires:	btrfs-progs-devel
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
-BuildRequires:	golang >= 1.21
+BuildRequires:	golang >= 1.22.6
 BuildRequires:	golang-varlink
 BuildRequires:	gpgme-devel
 BuildRequires:	libseccomp-devel
@@ -162,10 +162,13 @@ rm -rf $RPM_BUILD_ROOT
 %{systemduserunitdir}/podman-clean-transient.service
 %{systemduserunitdir}/podman-kube@.service
 %{systemduserunitdir}/podman-restart.service
+%{systemduserunitdir}/podman-user-wait-network-online.service
 %{_systemdusergeneratordir}/podman-user-generator
 %{_mandir}/man1/podman*.1*
 %{_mandir}/man5/podman-systemd.unit.5*
 %{_mandir}/man5/quadlet.5*
+%{_mandir}/man7/podman-rootless.7*
+%{_mandir}/man7/podman-troubleshooting.7*
 /usr/lib/tmpfiles.d/podman.conf
 %dir %{_sharedstatedir}/containers
 
