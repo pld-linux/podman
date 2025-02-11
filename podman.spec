@@ -1,19 +1,19 @@
 Summary:	A tool for managing OCI containers and pods
 Name:		podman
-Version:	5.3.2
+Version:	5.4.0
 Release:	1
 License:	Apache v2.0
 Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	00a013272ef7ebb89432dee2a273b3d5
+# Source0-md5:	cf13b68a57beb577cd36a97140502736
 Source1:	policy.json
 Source2:	registries.conf
 URL:		https://github.com/containers/podman
 BuildRequires:	btrfs-progs-devel
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
-BuildRequires:	golang >= 1.22.6
+BuildRequires:	golang >= 1.22.8
 BuildRequires:	golang-varlink
 BuildRequires:	gpgme-devel
 BuildRequires:	libseccomp-devel
