@@ -25,6 +25,7 @@ BuildRequires:	systemd-devel
 Requires:	conmon
 Requires:	crun
 Requires:	netavark
+Suggests:	catatonit
 Suggests:	passt
 Suggests:	uidmap
 ExclusiveArch:	%go_arches
