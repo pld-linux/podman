@@ -93,7 +93,7 @@ Zsh completion for podman command.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers,%{bash_compdir},%{fish_compdir},%{zsh_compdir},%{_sharedstatedir}/containers}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers/systemd/users,%{bash_compdir},%{fish_compdir},%{zsh_compdir},%{_sharedstatedir}/containers,%{_datadir}/containers/systemd}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -142,6 +142,8 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/policy.json
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/registries.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/containers/storage.conf
+%dir %{_sysconfdir}/containers/systemd
+%dir %{_sysconfdir}/containers/systemd/users
 %attr(755,root,root) %{_bindir}/podman
 %attr(755,root,root) %{_bindir}/podman-remote
 %attr(755,root,root) %{_bindir}/podmansh
@@ -165,6 +167,8 @@ rm -rf $RPM_BUILD_ROOT
 %{systemduserunitdir}/podman-restart.service
 %{systemduserunitdir}/podman-user-wait-network-online.service
 %{_systemdusergeneratordir}/podman-user-generator
+%dir %{_datadir}/containers
+%dir %{_datadir}/containers/systemd
 %{_mandir}/man1/podman*.1*
 %{_mandir}/man5/podman-systemd.unit.5*
 %{_mandir}/man5/quadlet.5*
