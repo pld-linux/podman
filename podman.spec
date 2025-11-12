@@ -1,19 +1,19 @@
 Summary:	A tool for managing OCI containers and pods
 Name:		podman
-Version:	5.6.2
+Version:	5.7.0
 Release:	1
 License:	Apache v2.0
 Group:		Applications/System
 #Source0Download: https://github.com/containers/podman/releases
 Source0:	https://github.com/containers/podman/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	7598221efa9cc0e35d5fe65bcaf4fb49
+# Source0-md5:	e582c50f74e32638bd6bf8bc1da8ad69
 Source1:	policy.json
 Source2:	registries.conf
 URL:		https://github.com/containers/podman
 BuildRequires:	btrfs-progs-devel
 BuildRequires:	device-mapper-devel
 BuildRequires:	go-md2man
-BuildRequires:	golang >= 1.23.3
+BuildRequires:	golang >= 1.24.2
 BuildRequires:	golang-varlink
 BuildRequires:	gpgme-devel
 BuildRequires:	libseccomp-devel
@@ -111,11 +111,11 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/containers/systemd/users,%{bash_compdi
 	PYTHON="%{__python3}"
 
 cp -p %{SOURCE1} %{SOURCE2} \
-	vendor/github.com/containers/common/pkg/config/containers.conf \
+	vendor/go.podman.io/common/pkg/config/containers.conf \
 	$RPM_BUILD_ROOT%{_sysconfdir}/containers
 
 %{__sed} -e 's|/var/lib/containers|%{_sharedstatedir}/containers|g' \
-	vendor/github.com/containers/storage/storage.conf \
+	vendor/go.podman.io/storage/storage.conf \
 	> $RPM_BUILD_ROOT%{_sysconfdir}/containers/storage.conf
 
 $RPM_BUILD_ROOT%{_bindir}/podman completion -f $RPM_BUILD_ROOT%{bash_compdir}/podman bash
